@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/readme-hero.svg" alt="Harmoni - Spotify Video Sync" width="100%">
+  <img src="docs/readme-hero.png" alt="Harmoni - Spotify Video Sync" width="100%">
 </p>
 
 <h1 align="center">Harmoni</h1>
@@ -33,7 +33,7 @@
 ## Ekran Görüntüsü
 
 <p align="center">
-  <img src="docs/readme-hero.svg" alt="Harmoni Inline Bar" width="90%">
+  <img src="docs/readme-hero.png" alt="Harmoni Inline Bar" width="90%">
 </p>
 
 ---
@@ -75,7 +75,7 @@ Bar açıldığında sayfa içeriği otomatik olarak aşağı kaydırılır (`bo
 ## Çalışma Akışı
 
 <p align="center">
-  <img src="docs/sync-flow.svg" alt="Harmoni çalışma akışı" width="100%">
+  <img src="docs/sync-flow.png" alt="Harmoni çalışma akışı" width="100%">
 </p>
 
 ---
