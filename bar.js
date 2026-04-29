@@ -13,6 +13,7 @@
     autoOpenSpotify: true,
     autoHide: true,
     autoHideDelay: 2,
+    autoShowOnVideo: true,
   });
 
   const ICON_URL = (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL)
@@ -24,7 +25,9 @@
   let statusTimer = 0;
   let volumeTimer = 0;
   let autoHideTimer = 0;
+  let toastTimer = 0;
   let currentSettings = { ...DEFAULT_SETTINGS };
+  let lastToastVideoPlaying = null;
 
   const els = {};
 
@@ -56,9 +59,9 @@
             </div>
           </div>
           <div class="svs-bar-center">
-            <button class="svs-btn svs-btn-ghost" id="svs-prev" title="Önceki parça" aria-label="Önceki parça">‹‹</button>
-            <button class="svs-btn svs-btn-primary" id="svs-playPause" title="Oynat / Duraklat">Oynat</button>
-            <button class="svs-btn svs-btn-ghost" id="svs-next" title="Sonraki parça" aria-label="Sonraki parça">››</button>
+            <button class="svs-btn svs-btn-ghost" id="svs-prev" title="Önceki parça (Ctrl+Shift+B)" aria-label="Önceki parça">‹‹</button>
+            <button class="svs-btn svs-btn-primary" id="svs-playPause" title="Oynat / Duraklat (Ctrl+Shift+P)">Oynat</button>
+            <button class="svs-btn svs-btn-ghost" id="svs-next" title="Sonraki parça (Ctrl+Shift+N)" aria-label="Sonraki parça">››</button>
             <div class="svs-volume-compact" title="Ses sınırı">
               <button class="svs-btn svs-btn-ghost svs-vol-mini" id="svs-volDown" aria-label="Ses -10">-</button>
               <input type="range" id="svs-maxVolume" min="0" max="100" step="1" aria-label="Ses sınırı">
@@ -70,7 +73,7 @@
             <span class="svs-pill" id="svs-videoState">Video yok</span>
             <button class="svs-btn svs-btn-ghost" id="svs-pin" title="Sabitle" aria-label="Sabitle">&#128204;</button>
             <button class="svs-btn svs-btn-ghost" id="svs-settings" title="Ayarlar" aria-label="Ayarlar">&#9881;</button>
-            <button class="svs-btn svs-btn-ghost" id="svs-close" title="Kapat" aria-label="Kapat">&#10005;</button>
+            <button class="svs-btn svs-btn-ghost" id="svs-close" title="Kapat (Esc)" aria-label="Kapat">&#10005;</button>
           </div>
         </div>
         <div class="svs-toolbar" id="svs-toolbar">
@@ -94,6 +97,10 @@
             <input id="svs-autoHide" type="checkbox">
             <span>Oto-kapanış</span>
           </label>
+          <label class="svs-check" for="svs-autoShowOnVideo" title="Video başladığında bar otomatik açılır">
+            <input id="svs-autoShowOnVideo" type="checkbox">
+            <span>Video tespitinde aç</span>
+          </label>
           <div class="svs-divider" aria-hidden="true"></div>
           <button class="svs-btn" id="svs-openSpotify" type="button">Spotify Web'i aç</button>
           <button class="svs-btn" id="svs-loadPlaylist" type="button">Playlist yükle</button>
@@ -110,6 +117,7 @@
     els.pauseOnVideo = document.getElementById('svs-pauseOnVideo');
     els.autoOpen = document.getElementById('svs-autoOpen');
     els.autoHide = document.getElementById('svs-autoHide');
+    els.autoShowOnVideo = document.getElementById('svs-autoShowOnVideo');
     els.autoHideDelay = document.getElementById('svs-autoHideDelay');
     els.delayValue = document.getElementById('svs-delayValue');
     els.pin = document.getElementById('svs-pin');
@@ -148,12 +156,7 @@
       startAutoHide();
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeBar();
-      }
-    });
-
+    document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('click', handleOutsideClick);
 
     if (container) {
@@ -164,6 +167,10 @@
     }
 
     makeTriggerDraggable();
+
+    if (hasRuntime()) {
+      chrome.runtime.onMessage.addListener(handleRuntimeMessage);
+    }
   }
 
   function escapeHtml(str) {
@@ -172,6 +179,80 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  function handleRuntimeMessage(message) {
+    if (!message || typeof message.type !== 'string') {
+      return;
+    }
+
+    if (message.type === 'BAR_VIDEO_STATE') {
+      const isPlaying = Boolean(message.isPlaying);
+      els.videoState.textContent = isPlaying ? 'Video aktif' : 'Video yok';
+      els.videoState.dataset.active = isPlaying ? 'true' : 'false';
+
+      if (isPlaying && currentSettings.autoShowOnVideo && container.dataset.open !== 'true') {
+        openBar();
+        showToast('Video tespit edildi — bar açıldı', 'info');
+      }
+
+      if (isPlaying !== lastToastVideoPlaying) {
+        if (isPlaying) {
+          showToast('Video oynatılıyor — Spotify duraklatıldı', 'info');
+        } else if (lastToastVideoPlaying === true) {
+          showToast('Video durdu — Spotify devam ediyor', 'success');
+        }
+        lastToastVideoPlaying = isPlaying;
+      }
+    }
+  }
+
+  function showToast(text, type = 'info') {
+    let toast = document.getElementById('svs-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'svs-toast';
+      document.body.appendChild(toast);
+    }
+
+    window.clearTimeout(toastTimer);
+    toast.textContent = text;
+    toast.dataset.type = type;
+    toast.classList.add('svs-toast-visible');
+
+    toastTimer = window.setTimeout(() => {
+      if (toast) {
+        toast.classList.remove('svs-toast-visible');
+      }
+    }, 2800);
+  }
+
+  function handleKeyDown(e) {
+    if (!e.ctrlKey || !e.shiftKey) {
+      return;
+    }
+
+    const key = e.key.toLowerCase();
+    let handled = false;
+
+    if (key === 's') {
+      toggleBar();
+      handled = true;
+    } else if (key === 'p') {
+      sendSpotifyCommand('playPause', 'Komut gönderiliyor...');
+      handled = true;
+    } else if (key === 'n') {
+      sendSpotifyCommand('next', 'Sonraki parça...');
+      handled = true;
+    } else if (key === 'b') {
+      sendSpotifyCommand('previous', 'Önceki parça...');
+      handled = true;
+    }
+
+    if (handled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
 
   function handleOutsideClick(e) {
@@ -299,6 +380,28 @@
       });
   }
 
+  function loadTriggerPosition() {
+    if (!hasStorage()) return;
+    chrome.storage.sync.get('svsTriggerPos', (result) => {
+      const pos = result && result.svsTriggerPos;
+      if (pos && typeof pos.right === 'number' && typeof pos.top === 'number') {
+        trigger.style.right = `${pos.right}px`;
+        trigger.style.top = `${pos.top}px`;
+        trigger.style.left = 'auto';
+      }
+    });
+  }
+
+  function saveTriggerPosition() {
+    if (!hasStorage() || !trigger) return;
+    const rect = trigger.getBoundingClientRect();
+    const right = Math.round(window.innerWidth - rect.right);
+    const top = Math.round(rect.top);
+    chrome.storage.sync.set({ svsTriggerPos: { right, top } }, () => {
+      void chrome.runtime.lastError;
+    });
+  }
+
   function saveSettings(event) {
     if (event) {
       event.preventDefault ? event.preventDefault() : null;
@@ -318,6 +421,7 @@
       autoOpenSpotify: els.autoOpen.checked,
       autoHide: els.autoHide.checked,
       autoHideDelay: sanitizeAutoHideDelay(els.autoHideDelay.value),
+      autoShowOnVideo: els.autoShowOnVideo.checked,
     };
 
     currentSettings = settings;
@@ -347,6 +451,7 @@
     els.pauseOnVideo.checked = settings.pauseSpotifyOnVideo;
     els.autoOpen.checked = settings.autoOpenSpotify;
     els.autoHide.checked = settings.autoHide;
+    els.autoShowOnVideo.checked = settings.autoShowOnVideo;
     const delay = sanitizeAutoHideDelay(settings.autoHideDelay);
     els.autoHideDelay.value = delay;
     els.delayValue.textContent = `${delay}s`;
@@ -478,6 +583,11 @@
         items.autoHideDelay,
         DEFAULT_SETTINGS.autoHideDelay,
       )),
+      autoShowOnVideo: firstBoolean(
+        nested.autoShowOnVideo,
+        items.autoShowOnVideo,
+        DEFAULT_SETTINGS.autoShowOnVideo,
+      ),
     };
   }
 
@@ -490,6 +600,7 @@
       autoOpenSpotify: settings.autoOpenSpotify,
       autoHide: settings.autoHide,
       autoHideDelay: settings.autoHideDelay,
+      autoShowOnVideo: settings.autoShowOnVideo,
     };
   }
 
@@ -687,6 +798,7 @@
           trigger.style.top = `${Math.round(rect.top)}px`;
           window.setTimeout(() => {
             trigger.style.transition = '';
+            saveTriggerPosition();
           }, 220);
         }
       };
@@ -706,6 +818,7 @@
   function init() {
     createDOM();
     loadSettings();
+    loadTriggerPosition();
     refreshStatus();
 
     window.addEventListener('resize', () => {

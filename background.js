@@ -177,9 +177,23 @@ async function handleMessage(message, sender) {
       await syncSpotifyWithVideoState(`video:${message.reason || 'change'}`);
     }
 
+    const anyPlaying = isAnyVideoPlaying();
+    const tabId = sender?.tab?.id;
+    if (Number.isInteger(tabId)) {
+      try {
+        chrome.tabs.sendMessage(tabId, {
+          type: 'BAR_VIDEO_STATE',
+          isPlaying: anyPlaying,
+          title: message.title || sender?.tab?.title || '',
+        });
+      } catch (e) {
+        // Tab may not have the bar content script
+      }
+    }
+
     return {
       ok: true,
-      anyVideoPlaying: isAnyVideoPlaying(),
+      anyVideoPlaying: anyPlaying,
       trackedVideoFrames: videoFrames.size,
     };
   }
