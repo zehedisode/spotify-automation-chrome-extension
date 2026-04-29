@@ -1,49 +1,103 @@
-<svg width="1100" height="420" viewBox="0 0 1100 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Spotify Video Sync çalışma akışı</title>
-  <desc id="desc">Video oynatma durumundan Spotify Web kontrolüne giden sade akış diyagramı.</desc>
-  <rect width="1100" height="420" rx="28" fill="#F4F6F2"/>
-  <rect x="36" y="36" width="1028" height="348" rx="24" fill="#FFFFFF" stroke="#DCE4DD"/>
+<svg width="1000" height="520" viewBox="0 0 1000 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flow-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111714"/>
+      <stop offset="100%" stop-color="#0d1210"/>
+    </linearGradient>
+    <linearGradient id="step-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1ed760" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#2f9ebf" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="step-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#3a5246"/>
+    </marker>
+  </defs>
 
-  <g font-family="Inter, Segoe UI, Arial, sans-serif">
-    <text x="72" y="88" fill="#111714" font-size="30" font-weight="900">Çalışma Akışı</text>
-    <text x="72" y="118" fill="#64716A" font-size="16" font-weight="650">Eklenti sadece gerekli durumda Spotify'a dokunur.</text>
+  <rect width="1000" height="520" rx="20" fill="url(#flow-bg)"/>
 
-    <g transform="translate(72 166)">
-      <rect width="260" height="144" rx="18" fill="#F8FAF7" stroke="#DCE4DD"/>
-      <circle cx="52" cy="50" r="28" fill="#2F9EBF"/>
-      <path d="M43 36l27 14-27 14V36z" fill="#FFFFFF"/>
-      <text x="94" y="45" fill="#111714" font-size="21" font-weight="900">Video oynar</text>
-      <text x="94" y="73" fill="#64716A" font-size="15" font-weight="650">content.js HTML5</text>
-      <text x="94" y="96" fill="#64716A" font-size="15" font-weight="650">video durumunu izler</text>
-      <rect x="28" y="112" width="204" height="8" rx="4" fill="#E7EEE8"/>
-      <rect x="28" y="112" width="118" height="8" rx="4" fill="#2F9EBF"/>
-    </g>
+  <!-- Title -->
+  <text x="500" y="44" fill="#f7fff9" font-family="Inter, system-ui, Segoe UI" font-size="22" font-weight="900" text-anchor="middle">Çalışma Akışı</text>
+  <rect x="460" y="54" width="80" height="3" rx="1.5" fill="#1ed760"/>
 
-    <path d="M360 238H470" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round"/>
-    <path d="M456 220l24 18-24 18" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- ========== STEP 1 ========== -->
+  <g transform="translate(60, 100)">
+    <rect x="0" y="0" width="180" height="120" rx="16" fill="#1a1f1c" stroke="#2a3530" stroke-width="1" filter="url(#step-shadow)"/>
+    <rect x="0" y="0" width="180" height="120" rx="16" fill="url(#step-grad)"/>
+    <circle cx="24" cy="28" r="14" fill="#1ed760" opacity="0.15"/>
+    <text x="24" y="33" fill="#1ed760" font-family="Inter, system-ui" font-size="14" font-weight="900" text-anchor="middle">1</text>
+    <text x="50" y="33" fill="#f7fff9" font-family="Inter, system-ui" font-size="15" font-weight="800">Video Algılama</text>
+    <text x="16" y="62" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">content.js her sayfadaki</text>
+    <text x="16" y="80" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">HTML5 video elementlerini</text>
+    <text x="16" y="98" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">izler ve durumu bildirir.</text>
+  </g>
 
-    <g transform="translate(504 166)">
-      <rect width="260" height="144" rx="18" fill="#111714"/>
-      <rect x="28" y="25" width="56" height="56" rx="16" fill="#1ED760"/>
-      <path d="M41 49c18-5 33-2 43 4" stroke="#07140C" stroke-width="4" stroke-linecap="round"/>
-      <path d="M44 62c13-3 24-1 31 3" stroke="#07140C" stroke-width="3" stroke-linecap="round"/>
-      <text x="102" y="45" fill="#FFFFFF" font-size="21" font-weight="900">Karar verilir</text>
-      <text x="102" y="73" fill="#B9C6BF" font-size="15" font-weight="650">background.js video</text>
-      <text x="102" y="96" fill="#B9C6BF" font-size="15" font-weight="650">sekme durumunu tutar</text>
-      <rect x="28" y="112" width="204" height="8" rx="4" fill="#26312C"/>
-      <rect x="28" y="112" width="150" height="8" rx="4" fill="#1ED760"/>
-    </g>
+  <!-- Arrow 1→2 -->
+  <path d="M260 160 L320 160" stroke="#2a3530" stroke-width="2" marker-end="url(#arrow)"/>
 
-    <path d="M792 238H902" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round"/>
-    <path d="M888 220l24 18-24 18" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- ========== STEP 2 ========== -->
+  <g transform="translate(340, 100)">
+    <rect x="0" y="0" width="180" height="120" rx="16" fill="#1a1f1c" stroke="#2a3530" stroke-width="1" filter="url(#step-shadow)"/>
+    <rect x="0" y="0" width="180" height="120" rx="16" fill="url(#step-grad)"/>
+    <circle cx="24" cy="28" r="14" fill="#2f9ebf" opacity="0.15"/>
+    <text x="24" y="33" fill="#2f9ebf" font-family="Inter, system-ui" font-size="14" font-weight="900" text-anchor="middle">2</text>
+    <text x="50" y="33" fill="#f7fff9" font-family="Inter, system-ui" font-size="15" font-weight="800">Durum Senkronu</text>
+    <text x="16" y="62" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">background.js video</text>
+    <text x="16" y="80" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">durumunu saklar ve</text>
+    <text x="16" y="98" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">Spotify ile eşleştirir.</text>
+  </g>
 
-    <g transform="translate(936 166)">
-      <rect width="92" height="144" rx="18" fill="#F8FAF7" stroke="#DCE4DD"/>
-      <circle cx="46" cy="48" r="30" fill="#1ED760"/>
-      <path d="M29 40c19-5 35-3 47 4" stroke="#07140C" stroke-width="5" stroke-linecap="round"/>
-      <path d="M33 55c13-4 25-2 34 3" stroke="#07140C" stroke-width="4" stroke-linecap="round"/>
-      <text x="18" y="102" fill="#111714" font-size="18" font-weight="900">Spotify</text>
-      <text x="15" y="126" fill="#64716A" font-size="13" font-weight="750">dur / devam</text>
-    </g>
+  <!-- Arrow 2→3 -->
+  <path d="M540 160 L600 160" stroke="#2a3530" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== STEP 3 ========== -->
+  <g transform="translate(620, 100)">
+    <rect x="0" y="0" width="180" height="120" rx="16" fill="#1a1f1c" stroke="#2a3530" stroke-width="1" filter="url(#step-shadow)"/>
+    <rect x="0" y="0" width="180" height="120" rx="16" fill="url(#step-grad)"/>
+    <circle cx="24" cy="28" r="14" fill="#f6c85f" opacity="0.15"/>
+    <text x="24" y="33" fill="#f6c85f" font-family="Inter, system-ui" font-size="14" font-weight="900" text-anchor="middle">3</text>
+    <text x="50" y="33" fill="#f7fff9" font-family="Inter, system-ui" font-size="15" font-weight="800">Spotify Kontrol</text>
+    <text x="16" y="62" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">spotifyController.js</text>
+    <text x="16" y="80" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">DOM üzerinden oynat /</text>
+    <text x="16" y="98" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">duraklat komutu verir.</text>
+  </g>
+
+  <!-- Arrow 3→4 (down) -->
+  <path d="M710 220 L710 260" stroke="#2a3530" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== STEP 4 ========== -->
+  <g transform="translate(340, 280)">
+    <rect x="0" y="0" width="320" height="110" rx="16" fill="#1a1f1c" stroke="#2a3530" stroke-width="1" filter="url(#step-shadow)"/>
+    <rect x="0" y="0" width="320" height="110" rx="16" fill="url(#step-grad)"/>
+    <circle cx="24" cy="28" r="14" fill="#1ed760" opacity="0.15"/>
+    <text x="24" y="33" fill="#1ed760" font-family="Inter, system-ui" font-size="14" font-weight="900" text-anchor="middle">4</text>
+    <text x="50" y="33" fill="#f7fff9" font-family="Inter, system-ui" font-size="15" font-weight="800">Inline Bar & Bildirimler</text>
+    <text x="16" y="62" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">Video başladığında bar otomatik açılır. Toast bildirimleri</text>
+    <text x="16" y="80" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">gösterilir. Ses sınırı, oynat/duraklat ve kısayollar</text>
+    <text x="16" y="98" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">tek tıkla erişilebilir.</text>
+  </g>
+
+  <!-- Arrow 4→5 (down) -->
+  <path d="M500 390 L500 420" stroke="#2a3530" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== STEP 5 ========== -->
+  <g transform="translate(340, 440)">
+    <rect x="0" y="0" width="320" height="60" rx="16" fill="#0f1412" stroke="#1ed760" stroke-width="1" stroke-opacity="0.25" filter="url(#step-shadow)"/>
+    <text x="24" y="24" fill="#f7fff9" font-family="Inter, system-ui" font-size="14" font-weight="800">Video Bittiğinde</text>
+    <text x="24" y="46" fill="#8fa89a" font-family="Inter, system-ui" font-size="12" font-weight="500">Spotify sadece eklenti durdurduysa otomatik devam eder.</text>
+  </g>
+
+  <!-- Side legend -->
+  <g transform="translate(840, 280)">
+    <rect x="0" y="0" width="120" height="110" rx="12" fill="#1a1f1c" stroke="#2a3530" stroke-width="1"/>
+    <text x="16" y="28" fill="#f7fff9" font-family="Inter, system-ui" font-size="12" font-weight="800">Bileşenler</text>
+    <rect x="16" y="42" width="10" height="10" rx="3" fill="#1ed760"/>
+    <text x="34" y="51" fill="#8fa89a" font-family="Inter, system-ui" font-size="11" font-weight="500">content.js</text>
+    <rect x="16" y="64" width="10" height="10" rx="3" fill="#2f9ebf"/>
+    <text x="34" y="73" fill="#8fa89a" font-family="Inter, system-ui" font-size="11" font-weight="500">background.js</text>
+    <rect x="16" y="86" width="10" height="10" rx="3" fill="#f6c85f"/>
+    <text x="34" y="95" fill="#8fa89a" font-family="Inter, system-ui" font-size="11" font-weight="500">bar.js</text>
   </g>
 </svg>
