@@ -449,3 +449,124 @@
     #111714;
   border-color: rgba(47, 158, 191, 0.3);
 }
+
+#svs-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483648;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+#svs-modal.svs-modal-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#svs-modal .svs-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+#svs-modal .svs-modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 14px;
+  background: #f4f6f2;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: #111714;
+  scrollbar-width: thin;
+}
+
+#svs-modal .svs-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #dce4dd;
+}
+
+#svs-modal .svs-modal-header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+#svs-modal .svs-modal-body {
+  padding: 14px 16px;
+  display: grid;
+  gap: 18px;
+}
+
+#svs-modal .svs-modal-section h3 {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64716a;
+}
+
+#svs-modal .svs-shortcuts {
+  display: grid;
+  gap: 8px;
+}
+
+#svs-modal .svs-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#svs-modal .svs-shortcut kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid #c2cfc5;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 2px 0 #dce4dd;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  color: #111714;
+}
+
+#svs-modal .svs-shortcut span {
+  color: #3a4a42;
+}
+
+#svs-modal .svs-feature-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+#svs-modal .svs-feature-list li {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #3a4a42;
+}
+
+#svs-modal .svs-feature-list li strong {
+  color: #111714;
+}

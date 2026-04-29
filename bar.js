@@ -105,11 +105,48 @@
           <button class="svs-btn" id="svs-openSpotify" type="button">Spotify Web'i aç</button>
           <button class="svs-btn" id="svs-loadPlaylist" type="button">Playlist yükle</button>
           <button class="svs-btn svs-btn-primary" id="svs-save" type="button">Kaydet</button>
+          <div class="svs-divider" aria-hidden="true"></div>
+          <button class="svs-btn" id="svs-help" type="button" title="Bilgi">?</button>
         </div>
         <div class="svs-status" id="svs-status" role="status" aria-live="polite"></div>
       </div>
     `;
     document.body.appendChild(container);
+
+    const modal = document.createElement('div');
+    modal.id = 'svs-modal';
+    modal.className = 'svs-modal';
+    modal.innerHTML = `
+      <div class="svs-modal-backdrop" id="svs-modalBackdrop"></div>
+      <div class="svs-modal-panel">
+        <div class="svs-modal-header">
+          <h2>Spotify Video Sync</h2>
+          <button class="svs-btn svs-btn-ghost" id="svs-modalClose" title="Kapat">&#10005;</button>
+        </div>
+        <div class="svs-modal-body">
+          <section class="svs-modal-section">
+            <h3>Klavye Kısayolları</h3>
+            <div class="svs-shortcuts">
+              <div class="svs-shortcut"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> <span>Bar aç / kapat</span></div>
+              <div class="svs-shortcut"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> <span>Oynat / Duraklat</span></div>
+              <div class="svs-shortcut"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> <span>Sonraki parça</span></div>
+              <div class="svs-shortcut"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> <span>Önceki parça</span></div>
+            </div>
+          </section>
+          <section class="svs-modal-section">
+            <h3>Özellikler</h3>
+            <ul class="svs-feature-list">
+              <li><strong>Video Senkronu:</strong> Video başladığında Spotify otomatik duraklar.</li>
+              <li><strong>Oto-Kapanış:</strong> Bar belirli süre sonra otomatik kapanır.</li>
+              <li><strong>Video Tespitinde Aç:</strong> Video algılandığında bar otomatik belirir.</li>
+              <li><strong>Sürükleme:</strong> Tetikleyici butonu mouse ile tutup istediğiniz yere bırakabilirsiniz.</li>
+              <li><strong>Sabitleme:</strong> Pin butonu ile bar'ı sabitleyebilirsiniz.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
 
     els.playlistUrl = document.getElementById('svs-playlistUrl');
     els.maxVolume = document.getElementById('svs-maxVolume');
@@ -137,9 +174,12 @@
     document.getElementById('svs-volUp').addEventListener('click', () => bumpVolume(10));
     document.getElementById('svs-settings').addEventListener('click', toggleToolbar);
     document.getElementById('svs-close').addEventListener('click', closeBar);
+    document.getElementById('svs-help').addEventListener('click', openModal);
+    document.getElementById('svs-modalClose').addEventListener('click', closeModal);
+    document.getElementById('svs-modalBackdrop').addEventListener('click', closeModal);
     els.pin.addEventListener('click', togglePin);
 
-    trigger.addEventListener('click', toggleBar);
+    // Trigger click handled inside makeTriggerDraggable to avoid drag/click conflict
 
     els.maxVolume.addEventListener('input', () => {
       syncVolume(els.maxVolume.value);
@@ -317,6 +357,20 @@
       updateMarginTop();
       window.setTimeout(updateMarginTop, 360);
     });
+  }
+
+  function openModal() {
+    const modal = document.getElementById('svs-modal');
+    if (modal) {
+      modal.classList.add('svs-modal-visible');
+    }
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('svs-modal');
+    if (modal) {
+      modal.classList.remove('svs-modal-visible');
+    }
   }
 
   function startAutoHide() {
@@ -811,6 +865,9 @@
       if (isDragging) {
         e.stopPropagation();
         e.preventDefault();
+        isDragging = false;
+      } else {
+        toggleBar();
       }
     });
   }
