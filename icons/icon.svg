@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Spotify Video Sync">
+  <rect width="128" height="128" rx="28" fill="#0f1512"/>
+  <circle cx="48" cy="52" r="31" fill="#1ed760"/>
+  <path d="M30 44c14-5 32-4 47 4" fill="none" stroke="#0f1512" stroke-width="7" stroke-linecap="round"/>
+  <path d="M34 57c11-3 25-2 37 4" fill="none" stroke="#0f1512" stroke-width="6" stroke-linecap="round"/>
+  <path d="M39 69c8-2 18-1 26 3" fill="none" stroke="#0f1512" stroke-width="5" stroke-linecap="round"/>
+  <path d="M44 91h22c11 0 17-6 17-16V57" fill="none" stroke="#39b9e3" stroke-width="7" stroke-linecap="round"/>
+  <path d="M82 57l-9 9 9 9" fill="none" stroke="#39b9e3" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="69" y="67" width="42" height="30" rx="9" fill="#f7fff9"/>
+  <path d="M86 75v14l13-7-13-7z" fill="#0f1512"/>
+  <circle cx="105" cy="72" r="4" fill="#1ed760"/>
+</svg>

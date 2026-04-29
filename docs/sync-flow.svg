@@ -1,0 +1,49 @@
+<svg width="1100" height="420" viewBox="0 0 1100 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Spotify Video Sync çalışma akışı</title>
+  <desc id="desc">Video oynatma durumundan Spotify Web kontrolüne giden sade akış diyagramı.</desc>
+  <rect width="1100" height="420" rx="28" fill="#F4F6F2"/>
+  <rect x="36" y="36" width="1028" height="348" rx="24" fill="#FFFFFF" stroke="#DCE4DD"/>
+
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <text x="72" y="88" fill="#111714" font-size="30" font-weight="900">Çalışma Akışı</text>
+    <text x="72" y="118" fill="#64716A" font-size="16" font-weight="650">Eklenti sadece gerekli durumda Spotify'a dokunur.</text>
+
+    <g transform="translate(72 166)">
+      <rect width="260" height="144" rx="18" fill="#F8FAF7" stroke="#DCE4DD"/>
+      <circle cx="52" cy="50" r="28" fill="#2F9EBF"/>
+      <path d="M43 36l27 14-27 14V36z" fill="#FFFFFF"/>
+      <text x="94" y="45" fill="#111714" font-size="21" font-weight="900">Video oynar</text>
+      <text x="94" y="73" fill="#64716A" font-size="15" font-weight="650">content.js HTML5</text>
+      <text x="94" y="96" fill="#64716A" font-size="15" font-weight="650">video durumunu izler</text>
+      <rect x="28" y="112" width="204" height="8" rx="4" fill="#E7EEE8"/>
+      <rect x="28" y="112" width="118" height="8" rx="4" fill="#2F9EBF"/>
+    </g>
+
+    <path d="M360 238H470" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round"/>
+    <path d="M456 220l24 18-24 18" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <g transform="translate(504 166)">
+      <rect width="260" height="144" rx="18" fill="#111714"/>
+      <rect x="28" y="25" width="56" height="56" rx="16" fill="#1ED760"/>
+      <path d="M41 49c18-5 33-2 43 4" stroke="#07140C" stroke-width="4" stroke-linecap="round"/>
+      <path d="M44 62c13-3 24-1 31 3" stroke="#07140C" stroke-width="3" stroke-linecap="round"/>
+      <text x="102" y="45" fill="#FFFFFF" font-size="21" font-weight="900">Karar verilir</text>
+      <text x="102" y="73" fill="#B9C6BF" font-size="15" font-weight="650">background.js video</text>
+      <text x="102" y="96" fill="#B9C6BF" font-size="15" font-weight="650">sekme durumunu tutar</text>
+      <rect x="28" y="112" width="204" height="8" rx="4" fill="#26312C"/>
+      <rect x="28" y="112" width="150" height="8" rx="4" fill="#1ED760"/>
+    </g>
+
+    <path d="M792 238H902" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round"/>
+    <path d="M888 220l24 18-24 18" stroke="#BAC7BF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <g transform="translate(936 166)">
+      <rect width="92" height="144" rx="18" fill="#F8FAF7" stroke="#DCE4DD"/>
+      <circle cx="46" cy="48" r="30" fill="#1ED760"/>
+      <path d="M29 40c19-5 35-3 47 4" stroke="#07140C" stroke-width="5" stroke-linecap="round"/>
+      <path d="M33 55c13-4 25-2 34 3" stroke="#07140C" stroke-width="4" stroke-linecap="round"/>
+      <text x="18" y="102" fill="#111714" font-size="18" font-weight="900">Spotify</text>
+      <text x="15" y="126" fill="#64716A" font-size="13" font-weight="750">dur / devam</text>
+    </g>
+  </g>
+</svg>
